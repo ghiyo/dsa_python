@@ -10,15 +10,14 @@ from typing import Generic, TypeVar, Optional
 T = TypeVar('T')
 
 
-class SinglyListNode(Generic[T]):
-    def __init__(self, data: T = None):
-        self.data: T = data
-        self.next: Optional[SinglyListNode[T]] = None
-
-
 class SinglyLinkedList(Generic[T]):
+    class _Node(Generic[T]):
+        def __init__(self, data: T = None):
+            self.data: T = data
+            self.next: Optional[SinglyLinkedList._Node[T]] = None
+
     def __init__(self):
-        self._head: Optional[SinglyListNode[T]] = None
+        self._head: Optional[self._Node[T]] = None
         self._size: int = 0
 
     def __str__(self) -> str:
@@ -65,7 +64,7 @@ class SinglyLinkedList(Generic[T]):
         Args:
             data (T): data to append of type T
         """
-        node = SinglyListNode(data)
+        node = self._Node(data)
         self._size += 1
         if not self._head:
             self._head = node
@@ -90,7 +89,7 @@ class SinglyLinkedList(Generic[T]):
         elif index < 0:
             index = self._size + index  # convert to positive index
 
-        node = SinglyListNode(data)
+        node = self._Node(data)
         self._size += 1
         if index == 0:
             node.next = self._head
