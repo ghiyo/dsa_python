@@ -2,6 +2,7 @@
 DoublyLinkedList.py
 """
 
+from copy import deepcopy
 from typing import Generic, TypeVar, Optional
 
 T = TypeVar('T')
@@ -10,17 +11,17 @@ T = TypeVar('T')
 class DoublyLinkedList(Generic[T]):
 
     class _Node(Generic[T]):
-        def __init__(self, value: T = None):
+        def __init__(self, value: T = None) -> None:
             self.value: T = value
             self.next: Optional[DoublyLinkedList._Node[T]] = None
             self.prev: Optional[DoublyLinkedList._Node[T]] = None
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._head: Optional[DoublyLinkedList._Node[T]] = None
         self._rear: Optional[DoublyLinkedList._Node[T]] = None
         self._size: int = 0
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self._size == 0:
             return "[]"
 
@@ -68,6 +69,28 @@ class DoublyLinkedList(Generic[T]):
         node.next = self._head
         self._head = node
         return
+
+    def get(self, index: int) -> T:
+        """Gets the element at the provided index
+
+        Args:
+            index (int): index of element
+
+        Returns:
+            T: copy of element returned
+        """
+        if not -self._size <= index < self._size:
+            raise IndexError("list index out of range")
+
+        if index < 0:
+            index = self._size + index
+
+        current = self._head
+        while index > 0:
+            current = current.next
+            index -= 1
+
+        return deepcopy(current.value)
 
     def insert(self, index: int, value: T) -> None:
         """Add element at a specified index

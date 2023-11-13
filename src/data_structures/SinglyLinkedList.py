@@ -12,11 +12,11 @@ T = TypeVar('T')
 
 class SinglyLinkedList(Generic[T]):
     class _Node(Generic[T]):
-        def __init__(self, data: T = None):
+        def __init__(self, data: T = None) -> None:
             self.data: T = data
             self.next: Optional[SinglyLinkedList._Node[T]] = None
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._head: Optional[self._Node[T]] = None
         self._size: int = 0
 

@@ -17,6 +17,15 @@ class TestDoublyLinkedList(unittest.TestCase):
         self.linked_list.append(1)
         self.assertEqual(str(self.linked_list), "[ 1 ]")
 
+    def test_get(self):
+        """testing get in DoublyLinkedList"""
+        self.assertRaises(IndexError, self.linked_list.get, 0)
+        self.linked_list.append(1)
+        self.assertEqual(self.linked_list.get(0), 1)
+        self.assertEqual(self.linked_list.get(-1), 1)
+        self.assertRaises(IndexError, self.linked_list.get, 2)
+        self.assertRaises(IndexError, self.linked_list.get, -2)
+
     def test_contains(self):
         """testing contains in DoublyLinkedList"""
         self.assertEqual(self.linked_list.contains(1), False)
